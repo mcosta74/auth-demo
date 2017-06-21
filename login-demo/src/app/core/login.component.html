@@ -1,0 +1,45 @@
+<div class="ui middle aligned center aligned grid">
+  <div class="row login">
+  <div class="column">
+    <form class="ui large form" [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+      <div class="ui raised segment">
+         <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="username" placeholder="Username" 
+              formControlName="username">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" placeholder="Password"
+              formControlName="password">
+          </div>
+        </div>
+        <button class="ui fluid large primary submit button" 
+          [disabled]="!loginForm.valid">Login</button>
+      </div>
+    </form>
+  </div>
+  </div>
+  <div class="row">
+    <div class="left aligned column">
+    <sui-message class="success" [isDismissable]="false" *ngIf="authUser">
+      <div class="header">
+        User "{{ authUser.username }}" logged in
+      </div>
+      <p>Permissions:</p>
+      <ul class="ui bulleted list">
+        <li class="item" *ngFor="let p of authUser.permissions">{{ p }}</li>
+      </ul>
+    </sui-message>
+    <sui-message class="error" [isDismissable]="false" *ngIf="errorMessage">
+      <div class="header">
+        Authentication Error
+      </div>
+        {{ errorMessage }}
+    </sui-message>
+    </div>
+  </div>
+</div>
