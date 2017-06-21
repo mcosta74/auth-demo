@@ -3,21 +3,23 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-from fw_auth.models import FileWavePermission
+from fw_auth.models import GlobalPermission
 
 new_permissions = [
-    ('Filset Type Profile', 'fw.fileset_type.profile'),
-    ('Filset Type Policy', 'fw.fileset_type.policy'),
+    ('Create Object1', 'global.object_1.add'),
+    ('Delete Object1', 'global.object_1.delete'),
+    ('Change Object1', 'global.object_1.change'),
+    ('Reset settings', 'global.reset_settings'),
 ]
 
 def createPermissions(apps, schema_editor):
     for p in new_permissions:
-        FileWavePermission.objects.create(name=p[0], codename=p[1])
+        GlobalPermission.objects.create(name=p[0], codename=p[1])
 
 
 def deletePremissions(app, schema_editor):
     for p in new_permissions:
-        FileWavePermission.objects.filter(codename=p[1]).delete()
+        GlobalPermission.objects.filter(codename=p[1]).delete()
 
 
 class Migration(migrations.Migration):

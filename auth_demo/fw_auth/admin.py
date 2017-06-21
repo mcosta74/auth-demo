@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from .models import FileWavePermission
+from .models import GlobalPermission
 
 # Register your models here.
 
-class FileWavePermissionAdmin(admin.ModelAdmin):
+class GlobalPermissionAdmin(admin.ModelAdmin):
     list_display = ('name', 'codename', )
     fields = ('name', 'codename', )
 
-admin.site.register(FileWavePermission, FileWavePermissionAdmin)
+admin.site.register(GlobalPermission, GlobalPermissionAdmin)

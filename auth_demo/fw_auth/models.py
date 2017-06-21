@@ -4,24 +4,23 @@ from django.contrib.contenttypes.models import ContentType
 
 # Create your models here.
 
-class FileWavePermissionManager(models.Manager):
+class GlobalPermissionManager(models.Manager):
     def get_query_set(self):
-        return super(FileWavePermissionManager, self).\
-            get_queryset().filter(content_type__name='filewave_permission')
+        return super(GlobalPermissionManager, self).\
+            get_queryset().filter(content_type__name='global_permission')
 
 
-class FileWavePermission(Permission):
+class GlobalPermission(Permission):
     """A global permission, not attached to a model"""
 
-    objects = FileWavePermissionManager()
+    objects = GlobalPermissionManager()
 
     class Meta:
         proxy = True
-        managed = False
 
     def save(self, *args, **kwargs):
         ct, created = ContentType.objects.get_or_create(
-            model="filewave_permission", app_label="fw_auth"
+            model="global_permission", app_label=self._meta.app_label
         )
         self.content_type = ct
-        super(FileWavePermission, self).save(*args, **kwargs)
+        super(GlobalPermission, self).save(*args, **kwargs)
