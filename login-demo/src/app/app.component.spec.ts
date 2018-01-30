@@ -1,10 +1,14 @@
 import { TestBed, async } from '@angular/core/testing';
 
+import { CoreModule } from 'app/core/core.module';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        CoreModule
+      ],
       declarations: [
         AppComponent
       ],
@@ -23,10 +27,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('app');
   }));
 
-  it('should render title in a h1 tag', async(() => {
+  it('should render app-login', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!!');
+    expect(compiled.querySelector('app-login')).toBeTruthy();
   }));
 });
