@@ -79,7 +79,7 @@ workflows:
             - build_cpp
             - build_frontend
             - build_django
-      - deploy:
+      - create_docker_images:
           requires:
             - test_cpp
             - test_frontend
