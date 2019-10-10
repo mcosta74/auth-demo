@@ -16,6 +16,6 @@ workflows:
   build_and_test_frontend:
     jobs:
       - build_frontend
-      - test_frontend
+      - test_frontend:
         requires:
         - build_frontend
