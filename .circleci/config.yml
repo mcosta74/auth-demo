@@ -81,7 +81,7 @@ workflows:
             - build_django
       - deploy:
           requires:
-            - test_backend
+            - test_cpp
             - test_frontend
             - test_django
        
