@@ -53,23 +53,44 @@ jobs:
     steps:
       - checkout
       - run: echo "deploy"
+  start_postgres:
+    docker:
+      - image: circleci/python:3.7.4
+    steps:
+      - checkout
+      - run: echo "start postgres"
+  stop_postgres:
+    docker:
+      - image: circleci/python:3.7.4
+    steps:
+      - checkout
+      - run: echo "stop postgres"
 workflows:
   version: 2
   build_and_test_frontend:
     jobs:
       - build_3rdparty
+      - start_postgres:
+          requires:
+            - build_3rdparty
+      - stop_postgres:
+          requires:
+            - test_cpp
+            - test_django
       - build_cpp:
           requires:
             - build_3rdparty
       - test_cpp:
           requires:
             - build_cpp
+            - start_postgres
       - build_django:
           requires:
             - build_3rdparty
       - test_django:
           requires:
             - build_django
+            - start_postgres
       - build_frontend
       - test_frontend:
           requires:
