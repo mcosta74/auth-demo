@@ -19,11 +19,12 @@ jobs:
       
 workflows:
   version: 2
-  jobs:
-    - checkout
-    - build:
-        requires:
-          - checkout
-    - test:
-        requires:
-          - build
+  build-and-test:
+    jobs:
+      - checkout
+      - build:
+          requires:
+            - checkout
+      - test:
+          requires:
+            - build
