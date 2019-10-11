@@ -4,17 +4,20 @@ jobs:
       - image: circleci/node:lts
     steps:
       - checkout
+      - run: ls -l
   build:
     docker:
       - image: circleci/node:lts
     steps:
       - run: echo "start building"
+      - run: ls -l
       - run: echo "stop buiding"
   test:
     docker:
       - image: circleci/node:lts
     steps:
       - run: echo "start testing"
+      - run: ls -l
       - run: echo "stop testing"
       
 workflows:
