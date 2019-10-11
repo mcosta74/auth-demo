@@ -1,108 +1,29 @@
 jobs:
-  build_3rdparty:
+  checkout:
     docker:
       - image: circleci/node:lts
     steps:
       - checkout
-      - run: echo "build 3rdparty"
-  build_cpp:
+  build:
     docker:
       - image: circleci/node:lts
     steps:
-      - checkout
-      - run: echo "build cpp"
-  test_cpp:
+      - run: echo "start building"
+      - run: echo "stop buiding"
+  test:
     docker:
       - image: circleci/node:lts
     steps:
-      - checkout
-      - run: echo "test cpp"
-  build_django:
-    docker:
-      - image: circleci/python:3.7.4
-    steps:
-      - checkout
-      - run: echo "build django"
-  test_django:
-    docker:
-      - image: circleci/python:3.7.4
-    steps:
-      - checkout
-      - run: echo "test django"
-  build_frontend:
-    docker:
-      - image: circleci/node:lts
-    steps:
-      - checkout
-      - run: echo "build frontend"
-  test_frontend:
-    docker:
-      - image: circleci/node:lts
-    steps:
-      - checkout
-      - run: echo "test frontend"
-  packaging:
-    docker:
-      - image: circleci/node:lts
-    steps:
-      - checkout
-      - run: echo "test frontend"
-  create_docker_images:
-    docker:
-      - image: circleci/python:3.7.4
-    steps:
-      - checkout
-      - run: echo "deploy"
-  start_postgres:
-    docker:
-      - image: circleci/python:3.7.4
-    steps:
-      - checkout
-      - run: echo "start postgres"
-  stop_postgres:
-    docker:
-      - image: circleci/python:3.7.4
-    steps:
-      - checkout
-      - run: echo "stop postgres"
+      - run: echo "start testing"
+      - run: echo "stop testing"
+      
 workflows:
   version: 2
-  build_and_test_frontend:
-    jobs:
-      - build_3rdparty
-      - start_postgres:
-          requires:
-            - build_3rdparty
-      - stop_postgres:
-          requires:
-            - test_cpp
-            - test_django
-      - build_cpp:
-          requires:
-            - build_3rdparty
-      - test_cpp:
-          requires:
-            - build_cpp
-            - start_postgres
-      - build_django:
-          requires:
-            - build_3rdparty
-      - test_django:
-          requires:
-            - build_django
-            - start_postgres
-      - build_frontend
-      - test_frontend:
-          requires:
-            - build_frontend
-      - packaging:
-          requires:
-            - build_cpp
-            - build_frontend
-            - build_django
-      - create_docker_images:
-          requires:
-            - test_cpp
-            - test_frontend
-            - test_django
-       
+  jobs:
+    - checkout
+    - build:
+        requires:
+          - checkout
+    - test:
+        requires:
+          - build
